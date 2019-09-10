@@ -19,10 +19,13 @@ function handleSearch(){
         const search=$('.search').val();
         console.log(search);
         generateLink(search);
+    
     }) 
 };
 
-
+function reset(){
+    $('.results').html('')
+}
 
 function generateLink(search){
     console.log('gen link working')
@@ -36,11 +39,23 @@ function getInfo(searchUrl){
     //console.log(`${searchUrl} passed off`);
     fetch(searchUrl)
         .then(response => response.json())
-        .then(console.log(responseJson))
+        .then(responseJson => renderInfo(responseJson))
 };
 
-function renderInfo(){
-    console.log('renderInfo working')
+function renderInfo(responseJson){
+    // repo name and url
+    console.log(responseJson)
+    console.log(responseJson[0].html_url)
+    console.log(responseJson[0].name)
+    console.log(responseJson.length)
+    $('ul').empty();
+    for (let i = 0; i < responseJson.length; i++){
+        $('ul').append(
+            `<li>${responseJson[i].name}</li> 
+            <li>${responseJson[i].html_url}</li>`
+        )
+    }
+
 };
 
 
